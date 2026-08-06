@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>大疆创新海外市场深度分析 | 李娉娉</title>
+<style>
+  :root {
+    --bg: #fff; --text: #1d1d1f; --text2: #86868b; --text3: #aeaeb2;
+    --card: #f5f5f7; --border: #e8e8ed; --accent: #0071e3;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg); color: var(--text); -webkit-font-smoothing: antialiased;
+  }
+
+  /* Top bar */
+  .topbar {
+    position: fixed; top:0; left:0; right:0; z-index:100; height:52px;
+    background: rgba(255,255,255,0.85); backdrop-filter: saturate(180%) blur(20px);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 40px; font-size: 13px; border-bottom: 1px solid rgba(0,0,0,0.06);
+  }
+  .topbar .logo { font-weight: 700; font-size: 15px; color: var(--text); letter-spacing: -0.3px; }
+  .topbar .logo span { color: var(--accent); }
+  .topbar nav a {
+    color: var(--text2); text-decoration: none; margin-left: 32px; font-size: 12px;
+    transition: color 0.2s;
+  }
+  .topbar nav a:hover { color: var(--text); }
+
+  /* Page system */
+  .page { display: none; padding-top: 52px; }
+  .page.active { display: block; }
+
+  /* ===== HOME ===== */
+  .home-layout { display: flex; min-height: calc(100vh - 52px); }
+
+  /* Left sidebar */
+  .home-sidebar {
+    width: 340px; flex-shrink: 0; padding: 60px 0 60px 48px;
+    border-right: 1px solid var(--border);
+    display: flex; flex-direction: column; justify-content: center;
+  }
+  .home-sidebar .sidebar-title {
+    font-size: 11px; letter-spacing: 2px; color: var(--text3); text-transform: uppercase;
+    margin-bottom: 32px;
+  }
+  .sidebar-nav { list-style: none; }
+  .sidebar-nav li { margin-bottom: 2px; }
+  .sidebar-nav li a {
+    display: flex; align-items: center; gap: 14px; padding: 11px 16px 11px 0;
+    text-decoration: none; color: var(--text2); font-size: 15px; font-weight: 500;
+    border-radius: 8px; transition: all 0.2s; cursor: pointer; position: relative;
+  }
+  .sidebar-nav li a .dot {
+    width: 6px; height: 6px; border-radius: 50%; background: var(--text3); flex-shrink: 0;
+    transition: all 0.2s;
+  }
+  .sidebar-nav li a:hover { color: var(--text); padding-left: 8px; }
+  .sidebar-nav li a:hover .dot { background: var(--accent); width: 8px; height: 8px; }
+  .sidebar-nav li a.active { color: var(--text); font-weight: 600; }
+  .sidebar-nav li a.active .dot { background: var(--accent); width: 8px; height: 8px; }
+  .sidebar-nav li a .num {
+    font-size: 10px; color: var(--text3); letter-spacing: 1px; min-width: 20px;
+  }
+
+  /* Right content */
+  .home-main {
+    flex: 1; display: flex; align-items: center; justify-content: center;
+    padding: 60px 80px; background: #fafafa;
+  }
+  .home-card {
+    max-width: 600px; width: 100%;
+    background: #fff; border-radius: 20px; padding: 64px 56px;
+    box-shadow: 0 2px 24px rgba(0,0,0,0.04), 0 0 0 1px rgba(0,0,0,0.04);
+    transition: all 0.4s;
+  }
+  .home-card .ch-num {
+    font-size: 11px; letter-spacing: 3px; color: var(--text3); text-transform: uppercase;
+    margin-bottom: 18px;
+  }
+  .home-card h2 {
+    font-size: 42px; font-weight: 700; letter-spacing: -0.03em; line-height: 1.1;
+    margin-bottom: 18px;
+  }
+  .home-card .ch-desc {
+    font-size: 17px; color: var(--text2); line-height: 1.7; margin-bottom: 36px;
+  }
+  .home-card .ch-stats { display: flex; gap: 48px; margin-bottom: 40px; }
+  .home-card .ch-stat .val { font-size: 36px; font-weight: 700; letter-spacing: -0.02em; }
+  .home-card .ch-stat .lbl { font-size: 13px; color: var(--text3); margin-top: 6px; }
+  .home-card .ch-img {
+    width: 100%; height: 200px; border-radius: 12px; object-fit: cover;
+    margin-bottom: 28px;
+  }
+  .home-card .ch-btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 14px 28px; border-radius: 50px;
+    background: var(--text); color: #fff; font-size: 14px; font-weight: 600;
+    text-decoration: none; transition: all 0.2s; cursor: pointer; border: none;
+  }
+  .home-card .ch-btn:hover { background: var(--accent); }
+  .home-info {
+    position: absolute; bottom: 40px; right: 60px; text-align: right;
+    font-size: 12px; color: var(--text3); line-height: 1.8;
+  }
+  .home-info strong { color: var(--text2); font-weight: 600; }
+
+  /* ===== DETAIL PAGES ===== */
+  .detail-wrap { max-width: 1000px; margin: 0 auto; padding: 0 40px 100px; }
+
+  .detail-hero {
+    padding: 80px 0 60px; text-align: center;
+  }
+  .detail-hero .dh-num {
+    font-size: 11px; letter-spacing: 3px; color: var(--text3); text-transform: uppercase; margin-bottom: 16px;
+  }
+  .detail-hero h2 {
+    font-size: 48px; font-weight: 700; letter-spacing: -0.03em; margin-bottom: 14px;
+  }
+  .detail-hero .dh-sub {
+    font-size: 17px; color: var(--text2); max-width: 560px; margin: 0 auto; line-height: 1.6;
+  }
+
+  /* KPI */
+  .kpi-row { display: grid; grid-template-columns: repeat(4,1fr); gap: 16px; margin-bottom: 32px; }
+  .kpi-card {
+    background: var(--card); border-radius: 16px; padding: 28px 24px;
+    transition: transform 0.2s;
+  }
+  .kpi-card:hover { transform: translateY(-2px); }
+  .kpi-card .num { font-size: 30px; font-weight: 700; letter-spacing: -0.02em; }
+  .kpi-card .lbl { font-size: 13px; color: var(--text2); margin-top: 4px; line-height: 1.5; }
+  .kpi-card .src { font-size: 10px; color: var(--text3); margin-top: 6px; }
+  .c-blue { color: var(--accent); }
+
+  /* Chart */
+  .chart {
+    background: var(--card); border-radius: 16px; padding: 36px; margin-bottom: 24px;
+  }
+  .chart h4 { font-size: 15px; font-weight: 600; margin-bottom: 24px; }
+  .bar { margin-bottom: 16px; }
+  .bar .info { display: flex; justify-content: space-between; font-size: 14px; margin-bottom: 6px; }
+  .bar .info .n { font-weight: 600; }
+  .bar .info .v { font-weight: 700; }
+  .bar .track { height: 8px; background: #e8e8ed; border-radius: 4px; overflow: hidden; }
+  .bar .fill { height: 100%; border-radius: 4px; transition: width 0.8s; width: 0%; }
+
+  /* Table */
+  .tbl { border-radius: 16px; overflow: hidden; margin-bottom: 24px; border: 1px solid var(--border); }
+  .tbl table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  .tbl thead th {
+    text-align: left; padding: 14px 18px; background: #1d1d1f; color: #fff;
+    font-weight: 500; font-size: 12px; letter-spacing: 0.5px;
+  }
+  .tbl tbody td {
+    padding: 14px 18px; border-bottom: 1px solid #f0f0f0; vertical-align: top;
+    background: #fff;
+  }
+  .tbl tbody tr:hover td { background: #fafafa; }
+  .tag { display: inline-block; padding: 2px 9px; border-radius: 20px; font-size: 10px; font-weight: 600; }
+  .t-g { background: #e8f8ed; color: #1a7a3a; } .t-y { background: #fff8e6; color: #b87a00; }
+  .t-r { background: #ffe8e8; color: #b82020; } .t-b { background: #e8f0fe; color: #1a56b8; }
+
+  /* Components */
+  .region-row { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; margin-bottom: 24px; }
+  .region-card {
+    background: var(--card); border-radius: 16px; padding: 32px 26px; transition: transform 0.2s;
+  }
+  .region-card:hover { transform: translateY(-3px); }
+  .region-card .flag { font-size: 36px; margin-bottom: 12px; }
+  .region-card h3 { font-size: 18px; margin-bottom: 4px; }
+  .region-card .metric { font-size: 26px; font-weight: 700; margin: 12px 0 8px; }
+  .region-card p { font-size: 13px; color: var(--text2); line-height: 1.7; }
+
+  .persona-row { display: grid; grid-template-columns: repeat(2,1fr); gap: 16px; margin-bottom: 24px; }
+  .persona-card { background: var(--card); border-radius: 16px; padding: 28px; transition: transform 0.2s; }
+  .persona-card:hover { transform: translateY(-2px); }
+  .persona-card .emoji { font-size: 32px; margin-bottom: 10px; }
+  .persona-card h3 { font-size: 16px; margin-bottom: 4px; }
+  .persona-card .demo { font-size: 11px; color: var(--accent); font-weight: 600; margin-bottom: 12px; }
+  .persona-card ul { font-size: 13px; color: var(--text2); padding-left: 16px; }
+  .persona-card ul li { margin-bottom: 5px; }
+
+  .opp-list { margin-bottom: 24px; }
+  .opp-item { display: flex; gap: 24px; padding: 32px 0; border-bottom: 1px solid var(--border); }
+  .opp-item:first-child { padding-top: 0; }
+  .opp-item:last-child { border: none; padding-bottom: 0; }
+  .opp-num { font-size: 56px; font-weight: 800; color: #e8e8ed; line-height: 1; min-width: 56px; transition: color 0.2s; }
+  .opp-item:hover .opp-num { color: var(--accent); }
+  .opp-content h3 { font-size: 18px; margin-bottom: 6px; }
+  .opp-content p { font-size: 14px; color: var(--text2); line-height: 1.8; }
+  .opp-tags { display: flex; gap: 6px; margin-top: 12px; flex-wrap: wrap; }
+
+  .timeline { position: relative; padding-left: 28px; }
+  .timeline::before { content:''; position: absolute; left: 5px; top:0; bottom:0; width: 1px; background: var(--border); }
+  .tl-item { margin-bottom: 28px; position: relative; padding-left: 20px; }
+  .tl-item::before { content:''; position: absolute; left: -27px; top: 5px; width: 8px; height: 8px; border-radius: 50%; background: var(--accent); }
+  .tl-item .year { font-size: 10px; font-weight: 700; color: var(--accent); letter-spacing: 1px; margin-bottom: 3px; }
+  .tl-item h4 { font-size: 15px; margin-bottom: 3px; }
+  .tl-item p { font-size: 13px; color: var(--text2); }
+
+  .ch-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start; }
+  .ch-item { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+  .ch-dot { width: 8px; height: 8px; border-radius: 2px; flex-shrink: 0; }
+  .ch-info { flex: 1; }
+  .ch-info .n { font-size: 13px; font-weight: 600; }
+  .ch-info .outer { height: 4px; background: #e8e8ed; border-radius: 2px; margin-top: 3px; overflow: hidden; }
+  .ch-info .inner { height: 100%; border-radius: 2px; transition: width 0.8s; width: 0%; }
+  .ch-pct { font-size: 18px; font-weight: 700; min-width: 44px; text-align: right; }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 24px; }
+  .da-hero { display: flex; align-items: center; gap: 20px; }
+  .da-hero .big { font-size: 72px; font-weight: 800; color: var(--accent); line-height: 1; letter-spacing: -0.03em; }
+  .da-hero .big-label { font-size: 16px; color: var(--text2); margin-top: 6px; }
+
+  .insight { padding: 22px 26px; border-radius: 12px; background: #fafafa; margin-top: 20px; border-left: 3px solid var(--accent); }
+  .insight strong { font-size: 13px; }
+  .insight p { font-size: 13px; color: var(--text2); margin-top: 4px; }
+
+  .img-row { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; margin: 24px 0; }
+  .img-tile { border-radius: 12px; overflow: hidden; aspect-ratio: 3/2; background: #f0f0f0; position: relative; }
+  .img-tile img { width:100%; height:100%; object-fit: cover; }
+  .img-tile .cap { position: absolute; bottom:0; left:0; right:0; padding: 10px 14px; background: linear-gradient(transparent, rgba(0,0,0,0.7)); color: #fff; font-size: 12px; }
+
+  /* Back */
+  .back {
+    position: fixed; top: 66px; left: 20px; z-index: 90;
+    width: 36px; height: 36px; border-radius: 50%;
+    background: rgba(0,0,0,0.04); border: none; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px; color: var(--text2); transition: all 0.2s;
+  }
+  .back:hover { background: rgba(0,0,0,0.08); color: var(--text); }
+
+  /* Footer */
+  .ft {
+    background: #1d1d1f; color: rgba(255,255,255,0.4); text-align: center;
+    padding: 48px 24px; font-size: 11px; line-height: 2;
+  }
+  .ft a { color: rgba(255,255,255,0.6); text-decoration: none; }
+  .ft a:hover { color: #fff; }
+
+  @media (max-width: 860px) {
+    .home-layout { flex-direction: column; }
+    .home-sidebar { width: 100%; padding: 32px 24px; border-right: none; border-bottom: 1px solid var(--border); }
+    .home-main { padding: 32px 20px; }
+    .home-card { padding: 36px 24px; }
+    .home-card h2 { font-size: 28px; }
+    .home-info { position: static; text-align: left; margin-top: 16px; padding: 0 20px; }
+    .kpi-row { grid-template-columns: repeat(2,1fr); }
+    .region-row, .persona-row, .ch-grid, .two-col { grid-template-columns: 1fr; }
+    .img-row { grid-template-columns: 1fr; }
+    .detail-hero h2 { font-size: 30px; }
+    .opp-num { font-size: 40px; min-width: 40px; }
+    .topbar { padding: 0 20px; }
+    .topbar nav a { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ===== TOP BAR ===== -->
+<header class="topbar">
+  <div class="logo">DJI <span>Market Intelligence</span></div>
+  <nav>
+    <a href="#" onclick="goHome()">首页</a>
+    <a href="mailto:987849774@qq.com">联系</a>
+    <a href="resume_optimized_大疆销售培训生_v3.docx">简历</a>
+  </nav>
+</header>
+
+<!-- ===== Back button (detail pages only) ===== -->
+<button class="back" id="backBtn" onclick="goHome()" style="opacity:0;pointer-events:none;">←</button>
+
+<!-- ===== HOME PAGE ===== -->
+<div class="page active" id="page-home">
+  <div class="home-layout" style="position:relative;">
+    <aside class="home-sidebar">
+      <div class="sidebar-title">Contents</div>
+      <ul class="sidebar-nav" id="sidebarNav">
+        <li><a data-ch="market" onmouseenter="preview('market')" onclick="openPage('market')"><span class="num">01</span><span class="dot"></span>全球市场格局</a></li>
+        <li><a data-ch="compete" onmouseenter="preview('compete')" onclick="openPage('compete')"><span class="num">02</span><span class="dot"></span>竞争格局深度对比</a></li>
+        <li><a data-ch="regions" onmouseenter="preview('regions')" onclick="openPage('regions')"><span class="num">03</span><span class="dot"></span>海外区域市场洞察</a></li>
+        <li><a data-ch="consumers" onmouseenter="preview('consumers')" onclick="openPage('consumers')"><span class="num">04</span><span class="dot"></span>海外消费者画像</a></li>
+        <li><a data-ch="strategy" onmouseenter="preview('strategy')" onclick="openPage('strategy')"><span class="num">05</span><span class="dot"></span>增长机会与策略建议</a></li>
+        <li><a data-ch="channel" onmouseenter="preview('channel')" onclick="openPage('channel')"><span class="num">06</span><span class="dot"></span>销售渠道结构与优化</a></li>
+        <li><a data-ch="history" onmouseenter="preview('history')" onclick="openPage('history')"><span class="num">07</span><span class="dot"></span>运动相机逆袭简史</a></li>
+        <li><a data-ch="conclusion" onmouseenter="preview('conclusion')" onclick="openPage('conclusion')"><span class="num">08</span><span class="dot"></span>总结与展望</a></li>
+      </ul>
+    </aside>
+    <main class="home-main" id="previewPanel">
+      <!-- Default -->
+      <div class="home-card" id="previewDefault">
+        <div class="ch-num">Market Research Report · August 2026</div>
+        <h2>大疆创新<br>海外市场深度分析</h2>
+        <p class="ch-desc">一份基于 Dedrone、Frost & Sullivan、GoPro 年报等真实数据的商业研究报告。左侧选择章节预览，点击进入完整内容。</p>
+        <div class="ch-stats">
+          <div class="ch-stat"><div class="val" style="color:var(--accent);">83.5%</div><div class="lbl">全球无人机市占率</div></div>
+          <div class="ch-stat"><div class="val">66%</div><div class="lbl">运动相机收入份额 #1</div></div>
+          <div class="ch-stat"><div class="val">800亿+</div><div class="lbl">2025 年营收（RMB）</div></div>
+        </div>
+        <a href="javascript:openPage('market')" class="ch-btn">开始阅读 →</a>
+      </div>
+      <!-- Preview templates hidden, injected by JS -->
+    </main>
+    <div class="home-info">
+      <strong>李娉娉</strong><br>
+      销售培训生（海外业务）求职作品<br>
+      2026.08
+    </div>
+  </div>
+
+  <!-- Preview data store -->
+  <div style="display:none;">
+    <script id="previewData" type="application/json">
+{
+  "market": {
+    "img": "https://images.unsplash.com/photo-1473968512647-3e447244af8f?w=600&h=240&fit=crop&auto=format",
+    "title": "全球市场格局",
+    "desc": "一家独大的无人机帝国，与改写格局的运动相机新王。DJI 占据全球消费无人机 83.5% 侦测份额，运动相机 66% 收入份额首次超越 GoPro 登顶全球第一。",
+    "stats": [["83.5%","无人机侦测占比"],["66%","运动相机收入份额"],["+76.85%","Insta360 增速"]]
+  },
+  "compete": {
+    "img": "https://images.unsplash.com/photo-1527977966376-1c8408f9f108?w=600&h=240&fit=crop&auto=format",
+    "title": "竞争格局深度对比",
+    "desc": "GoPro 份额从 2022 年 75% 崩塌至 2025 年 18%，全年亏损 $9,350 万。大疆 6 年从零到第一，但 Insta360 才是最危险的对手——营收增速 76.85%，内容生态与 DTC 领先。",
+    "stats": [["75%→18%","GoPro 份额崩塌"],["$9,350万","GoPro 2025 亏损"],["98.58亿","Insta360 营收"]]
+  },
+  "regions": {
+    "img": "https://images.unsplash.com/photo-1480714378408-67cf0d13bc1b?w=600&h=240&fit=crop&auto=format",
+    "title": "海外区域市场洞察",
+    "desc": "北美贡献 45% 海外收入，美国消费无人机市占 77%；欧洲 28% 稳健增长；亚太新兴 18% 增速最快但电商渠道几乎空白。三块战区需要三种完全不同的打法。",
+    "stats": [["45%","北美 · 核心利润池"],["28%","欧洲 · 稳健增长盘"],["18%","亚太 · 高增长引擎"]]
+  },
+  "consumers": {
+    "img": "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=600&h=240&fit=crop&auto=format",
+    "title": "海外消费者画像",
+    "desc": "四类核心用户群体：内容创作者偏爱 Pocket 3 但需要更好的剪辑工作流；户外运动爱好者被 GoPro 配件生态绑定；家庭用户认为无人机"太贵太专业"；商用用户需要本地化培训支持。",
+    "stats": [["🎬","创作者 · Pocket 3"],["🏔️","户外 · Action 5 Pro"],["✈️","家庭 · Mini 系列"]]
+  },
+  "strategy": {
+    "img": "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=600&h=240&fit=crop&auto=format",
+    "title": "增长机会与策略建议",
+    "desc": "五个基于数据的增长方向：Pocket 3 vlog 标配化、东南亚渠道下沉、Creator Fund 补齐 UGC 生态、品牌体验店零售升级、用户生命周期 CRM 经营。每项都有可落地路径。",
+    "stats": [["01","手持影像爆发窗口"],["03","内容生态基金"],["05","用户 LTV 经营"]]
+  },
+  "channel": {
+    "img": "https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=600&h=240&fit=crop&auto=format",
+    "title": "销售渠道结构与优化",
+    "desc": "线上电商 30% · 线下零售 25% · 官网 DTC 20% · 分销商 20%。DTC 落后 Insta360（35%），线下零售远逊 GoPro（76%）。渠道结构优化是增长的关键杠杆。",
+    "stats": [["20%","DTC 占比偏低"],["25%","线下零售待提升"],["76%","GoPro 线下对比"]]
+  },
+  "history": {
+    "img": "https://images.unsplash.com/photo-1492725764893-90b379c2b6e7?w=600&h=240&fit=crop&auto=format",
+    "title": "运动相机 6 年逆袭简史",
+    "desc": "2019 年大疆发布第一款运动相机 Osmo Action。6 年后以 66% 收入份额登顶全球第一，GoPro 首次年度未发新机。这是产品力碾压品牌惯性的经典商业案例。",
+    "stats": [["2019","Osmo Action 初代"],["2024","Action 5 Pro 全面对标"],["2025","66% 登顶全球第一"]]
+  },
+  "conclusion": {
+    "img": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&h=240&fit=crop&auto=format",
+    "title": "总结与展望",
+    "desc": "七章分析提炼为七大核心结论：无人机护城河极深但地缘政治是最大变量；运动相机新战场内容生态的仗才刚开始；海外三极分化需要三套打法；从卖硬件到卖创作力的转型迫在眉睫；Pocket 3 是下一个增长引擎；渠道是最大杠杆也是最大短板；大疆需要学会讲故事。",
+    "stats": [["7","核心结论"],["1","关于我"],["2026","求职作品"]]
+  }
+}
+    </script>
+  </div>
+</div>
+
+<!-- ===== PAGE: MARKET ===== -->
+<div class="page" id="page-market">
+  <div class="detail-wrap">
+    <div class="detail-hero"><div class="dh-num">Chapter 01</div><h2>全球市场格局</h2><p class="dh-sub">一家独大的无人机帝国，与改写格局的运动相机新王</p></div>
+    <div class="da-hero" style="margin-bottom:32px;">
+      <div><div class="big">83.5%</div><div class="big-label">DJI 全球无人机侦测数据占比</div><p style="font-size:11px;color:var(--text3);margin-top:4px;">Dedrone 2025 年度报告</p></div>
+      <img src="https://images.unsplash.com/photo-1473968512647-3e447244af8f?w=600&h=350&fit=crop&auto=format" style="width:100%;border-radius:12px;" alt="" onerror="this.style.display='none'">
+    </div>
+    <div class="kpi-row">
+      <div class="kpi-card"><div class="num c-blue">83.48%</div><div class="lbl">DJI 占全球无人机侦测数据比例</div><div class="src">Dedrone 2025</div></div>
+      <div class="kpi-card"><div class="num c-blue">66%</div><div class="lbl">全球运动相机收入份额 Q3 首次超越 GoPro</div><div class="src">Frost & Sullivan 2025</div></div>
+      <div class="kpi-card"><div class="num">800亿+</div><div class="lbl">2025 年营收（RMB）利润超 200 亿</div><div class="src">大公文汇 2026.04</div></div>
+      <div class="kpi-card"><div class="num">76.85%</div><div class="lbl">Insta360 2025 营收同比增长</div><div class="src">公司财报 · 虎嗅 2026</div></div>
+    </div>
+    <div class="chart">
+      <h4>全球消费级无人机市场份额</h4>
+      <div class="bar"><div class="info"><span class="n">DJI 大疆</span><span class="v c-blue">83.5%</span></div><div class="track"><div class="fill" style="background:linear-gradient(90deg,#0071e3,#42a5f5);" data-w="83.5"></div></div></div>
+      <div class="bar"><div class="info"><span class="n">DIY / FPV 自组</span><span class="v">9.8%</span></div><div class="track"><div class="fill" style="background:#ff3b30;" data-w="9.8"></div></div></div>
+      <div class="bar"><div class="info"><span class="n">Autel Robotics</span><span class="v">1.4%</span></div><div class="track"><div class="fill" style="background:#ff9500;" data-w="1.4"></div></div></div>
+      <div class="bar"><div class="info"><span class="n">其他品牌</span><span class="v">5.3%</span></div><div class="track"><div class="fill" style="background:#d1d1d6;" data-w="5.3"></div></div></div>
+      <p style="font-size:10px;color:var(--text3);margin-top:14px;">* DJI 消费级子类目占比超 90%。中国占全球商用无人机产量超 70%，DJI 独占中国 73%、美国 77%。美国贡献海外收入约 45%。</p>
+    </div>
+    <div class="img-row">
+      <div class="img-tile"><img src="https://images.unsplash.com/photo-1508614589041-895b88991e3e?w=400&h=270&fit=crop&auto=format" alt="" onerror="this.parentElement.style.background='#e8e8ed'"><div class="cap">消费级无人机 · DJI 市占率超 80%</div></div>
+      <div class="img-tile"><img src="https://images.unsplash.com/photo-1527977966376-1c8408f9f108?w=400&h=270&fit=crop&auto=format" alt="" onerror="this.parentElement.style.background='#e8e8ed'"><div class="cap">运动相机 · 2025 年登顶全球第一</div></div>
+      <div class="img-tile"><img src="https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=400&h=270&fit=crop&auto=format" alt="" onerror="this.parentElement.style.background='#e8e8ed'"><div class="cap">全球市场 · 100+ 国家 / 地区业务</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== PAGE: COMPETE ===== -->
+<div class="page" id="page-compete">
+  <div class="detail-wrap">
+    <div class="detail-hero"><div class="dh-num">Chapter 02</div><h2>竞争格局深度对比</h2><p class="dh-sub">GoPro 从 75% 到 18%——运动相机市场的权力转移已经完成</p></div>
+    <div class="chart">
+      <h4>运动相机全球收入份额演变</h4>
+      <div class="bar"><div class="info"><span class="n">DJI 大疆</span><span class="v c-blue">2019 年入局 → 2025 Q3: 66% 🥇</span></div><div class="track"><div class="fill" style="background:linear-gradient(90deg,#0071e3,#42a5f5);" data-w="66"></div></div></div>
+      <div class="bar"><div class="info"><span class="n">GoPro</span><span class="v">2022: 75% → 2025: 18%</span></div><div class="track"><div class="fill" style="background:#5856d6;" data-w="18"></div></div></div>
+      <div class="bar"><div class="info"><span class="n">Insta360 影石</span><span class="v">~13% · 营收增速 +76.85%</span></div><div class="track"><div class="fill" style="background:linear-gradient(90deg,#af52de,#d490f0);" data-w="13"></div></div></div>
+      <p style="font-size:10px;color:var(--text3);margin-top:14px;">* GoPro 2025 销量约 200 万台(-20%)，亏损 $9,350 万。Insta360 营收 98.58 亿超 GoPro 两倍。GoPro 首次年度未发新 HERO。</p>
+    </div>
+    <div class="tbl">
+      <table><thead><tr><th>维度</th><th>DJI 大疆</th><th>Insta360</th><th>GoPro</th></tr></thead><tbody>
+        <tr><td><strong>2025 运动相机份额</strong></td><td><span class="tag t-g">66% · #1</span></td><td><span class="tag t-b">~13% · #3</span></td><td><span class="tag t-y">~18% · #2</span></td></tr>
+        <tr><td><strong>2025 营收</strong></td><td>800+ 亿 RMB</td><td>98.58 亿 (+76.85%)</td><td>$6.52 亿 (-19%)</td></tr>
+        <tr><td><strong>盈利状况</strong></td><td><span class="tag t-g">净利润率 ~20%</span></td><td><span class="tag t-y">高速增长期</span></td><td><span class="tag t-r">亏损 $9,350 万</span></td></tr>
+        <tr><td><strong>核心产品</strong></td><td>Mavic/Air/Mini · Pocket 3 · Action 5 Pro · Osmo 360</td><td>X 系列全景 · Ace Pro · GO 穿戴 · Flow</td><td>HERO13 Black · MAX 2</td></tr>
+        <tr><td><strong>内容生态</strong></td><td><span class="tag t-y">SkyPixel 偏航拍</span></td><td><span class="tag t-g">ThinkBIG 创作者基金</span></td><td><span class="tag t-g">GoPro Awards</span></td></tr>
+        <tr><td><strong>海外渠道</strong></td><td><span class="tag t-g">Amazon · Best Buy · 官网</span></td><td><span class="tag t-y">Amazon · DTC ~35%</span></td><td><span class="tag t-g">全渠道 · 线下占 76%</span></td></tr>
+        <tr><td><strong>总部</strong></td><td>深圳 · 100+ 国家</td><td>深圳 · 海外收入占比高</td><td>美国 · ASP $357 高端</td></tr>
+      </tbody></table>
+    </div>
+    <div class="insight"><strong>⚠ 核心洞察：大疆最危险的对手不是 GoPro，是 Insta360</strong><p>Insta360 营收增速 76.85%，规模已是 GoPro 两倍。其优势不在无人机，而在<strong>内容生态 + DTC + 创作者社区</strong>三角飞轮。大疆在 UGC 和 DTC 上落后，这是海外最需要补的课。</p></div>
+  </div>
+</div>
+
+<!-- ===== PAGE: REGIONS ===== -->
+<div class="page" id="page-regions">
+  <div class="detail-wrap">
+    <div class="detail-hero"><div class="dh-num">Chapter 03</div><h2>海外区域市场洞察</h2><p class="dh-sub">三块核心战区 · 三种完全不同的打法</p></div>
+    <div class="region-row">
+      <div class="region-card"><div class="flag">🇺🇸</div><h3>北美 · 核心利润池</h3><div class="metric" style="color:var(--accent);">~45%</div><div style="font-size:11px;color:var(--text3);margin-bottom:10px;">占 DJI 海外收入</div><p><strong>美国消费无人机市占 77%。</strong>Best Buy 为最核心线下渠道。地缘政治压力存在但产品壁垒短期难撼。<br><br><strong>策略：</strong>零售体验升级 + Pocket 3 / Action 5 抢夺 GoPro 用户。</p></div>
+      <div class="region-card"><div class="flag">🇪🇺</div><h3>欧洲 · 稳健增长盘</h3><div class="metric">~28%</div><div style="font-size:11px;color:var(--text3);margin-bottom:10px;">占 DJI 海外收入</div><p>EASA 统一法规框架，德/法/英为核心市场。户外运动文化为手持影像提供天然土壤。<br><br><strong>策略：</strong>国别合规方案 + MediaMarkt 深耕 + 户外场景推 Pocket 3。</p></div>
+      <div class="region-card"><div class="flag">🌏</div><h3>亚太新兴 · 高增长</h3><div class="metric" style="color:var(--accent);">~18%</div><div style="font-size:11px;color:var(--text3);margin-bottom:10px;">增速最快 · 电商渠道空白</div><p>东南亚创作者经济爆发，但 Shopee/Lazada 品牌存在感弱。<br><br><strong>策略：</strong>本地电商合作 + 区域入门 SKU + 曼谷/雅加达体验店。</p></div>
+    </div>
+    <div class="img-row">
+      <div class="img-tile"><img src="https://images.unsplash.com/photo-1480714378408-67cf0d13bc1b?w=400&h=270&fit=crop&auto=format" alt="" onerror="this.parentElement.style.background='#e8e8ed'"><div class="cap">北美 · Best Buy 最核心线下渠道</div></div>
+      <div class="img-tile"><img src="https://images.unsplash.com/photo-1467269204594-9661b134dd2b?w=400&h=270&fit=crop&auto=format" alt="" onerror="this.parentElement.style.background='#e8e8ed'"><div class="cap">欧洲 · 户外文化推动手持影像</div></div>
+      <div class="img-tile"><img src="https://images.unsplash.com/photo-1519643381401-22c77e60520e?w=400&h=270&fit=crop&auto=format" alt="" onerror="this.parentElement.style.background='#e8e8ed'"><div class="cap">东南亚 · 创作者经济爆发增长</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== PAGE: CONSUMERS ===== -->
+<div class="page" id="page-consumers">
+  <div class="detail-wrap">
+    <div class="detail-hero"><div class="dh-num">Chapter 04</div><h2>海外消费者画像</h2><p class="dh-sub">四类核心用户 · 四种购买逻辑 · 四个未被满足的需求</p></div>
+    <div class="persona-row">
+      <div class="persona-card"><div class="emoji">🎬</div><h3>内容创作者 / Vlogger</h3><div class="demo">25-35 岁 · 北美/欧洲 · $40K-$80K</div><ul><li>核心需求：便携、易用、快速出片</li><li>购买驱动：YouTube 测评 + TikTok 种草</li><li>产品偏好：Pocket 3、Action 5 Pro</li><li><strong>痛点：</strong>App 到成片工作流不够极致</li></ul></div>
+      <div class="persona-card"><div class="emoji">🏔️</div><h3>户外运动爱好者</h3><div class="demo">22-40 岁 · 全球 · 中高收入</div><ul><li>核心需求：防水防抖、极限环境可靠</li><li>购买驱动：品牌口碑 + 同行推荐</li><li>产品偏好：Action 5 Pro、Mini 系列</li><li><strong>痛点：</strong>GoPro 配件生态绑定</li></ul></div>
+      <div class="persona-card"><div class="emoji">✈️</div><h3>家庭用户 / 旅行者</h3><div class="demo">30-50 岁 · 欧美/东南亚 · 中产</div><ul><li>核心需求：记录旅行、简单安全</li><li>购买驱动：线下体验 + 朋友推荐</li><li>产品偏好：Mini 系列、Pocket 3</li><li><strong>痛点：</strong>认为无人机"太贵太专业"</li></ul></div>
+      <div class="persona-card"><div class="emoji">🏢</div><h3>中小企业 / 商用入门</h3><div class="demo">房地产/农业/巡检</div><ul><li>核心需求：航拍测绘、明确 ROI</li><li>购买驱动：行业案例 + 经销商推荐</li><li>产品偏好：Mavic 3E、Matrice 系列</li><li><strong>痛点：</strong>本地化培训 + 售后不足</li></ul></div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== PAGE: STRATEGY ===== -->
+<div class="page" id="page-strategy">
+  <div class="detail-wrap">
+    <div class="detail-hero"><div class="dh-num">Chapter 05</div><h2>增长机会与策略建议</h2><p class="dh-sub">五个基于数据的增长方向，每一项都对应真实行业痛点</p></div>
+    <div class="opp-list">
+      <div class="opp-item"><div class="opp-num">01</div><div class="opp-content"><h3>把 Pocket 3 卖成「下一代 Vlog 标配」——手持影像的爆发窗口</h3><p>Pocket 3 全球热销，证明便携手持云台相机是一个被低估的大市场。运动相机市场约 $2.8B，vlog+云台增量市场尚未充分渗透。建议推出「Creator Kit」套装，在亚马逊做 A+ 页面，与头部创作者签年度合作。</p><div class="opp-tags"><span class="tag t-g">手持影像</span><span class="tag t-b">创作者经济</span><span class="tag t-b">内容营销</span></div></div></div>
+      <div class="opp-item"><div class="opp-num">02</div><div class="opp-content"><h3>亚太新兴市场渠道下沉——东南亚 + 印度是下一个增长极</h3><p>东南亚创作者数量年增 30%+，但 DJI 在 Shopee/Lazada 存在感远不如亚马逊。建议设立区域团队，与本地电商品牌日合作，推出区域专属入门 SKU。</p><div class="opp-tags"><span class="tag t-y">渠道下沉</span><span class="tag t-b">东南亚</span><span class="tag t-b">本地化</span></div></div></div>
+      <div class="opp-item"><div class="opp-num">03</div><div class="opp-content"><h3>补齐内容生态短板——不能只卖硬件，要「卖创作力」</h3><p>Insta360 ThinkBIG 和 GoPro Awards 在 UGC 生态上领先。建议设立 DJI Creator Fund 激励中小创作者，在 Mimo App 嵌入 AI 一键成片，与 CapCut 打通剪辑工作流。</p><div class="opp-tags"><span class="tag t-y">内容生态</span><span class="tag" style="background:#f3e8ff;color:#7c3aed;">创作者基金</span><span class="tag t-b">UGC</span></div></div></div>
+      <div class="opp-item"><div class="opp-num">04</div><div class="opp-content"><h3>零售终端体验升级——让消费者「摸到就想要」</h3><p>GoPro 线下占 76%，DJI 仅 ~25%。建议在纽约/伦敦/东京/新加坡设品牌体验店，在 Best Buy / MediaMarkt 升级「体验岛」。借鉴 Apple Store 体验式零售逻辑。</p><div class="opp-tags"><span class="tag t-g">零售体验</span><span class="tag t-b">线下渠道</span><span class="tag t-b">品牌店</span></div></div></div>
+      <div class="opp-item"><div class="opp-num">05</div><div class="opp-content"><h3>「入门→升级」用户生命周期经营——从 Mini 到全家桶忠诚</h3><p>大量用户从 Mini 系列首次接触 DJI，复购转化率有巨大提升空间。建议建立 CRM 体系：购买后推送教程→配件推荐→升级折扣。老客复购获客成本远低于拉新。</p><div class="opp-tags"><span class="tag t-b">CRM</span><span class="tag t-g">LTV</span><span class="tag t-b">复购</span><span class="tag t-b">用户运营</span></div></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== PAGE: CHANNEL ===== -->
+<div class="page" id="page-channel">
+  <div class="detail-wrap">
+    <div class="detail-hero"><div class="dh-num">Chapter 06</div><h2>销售渠道结构与优化</h2><p class="dh-sub">线上 vs 线下 · DTC vs 分销 · 三大品牌渠道战略逐帧对比</p></div>
+
+    <!-- Section A: DJI channel breakdown -->
+    <div class="chart" style="margin-bottom:32px;">
+      <h4>DJI 海外销售渠道收入占比（行业估算）</h4>
+      <div class="ch-grid">
+        <div>
+          <div class="ch-item"><div class="ch-dot" style="background:var(--accent);"></div><div class="ch-info"><div class="n">Amazon + 综合电商平台</div><div class="outer"><div class="inner" style="background:var(--accent);" data-w="30"></div></div></div><div class="ch-pct" style="color:var(--accent);">~30%</div></div>
+          <div class="ch-item"><div class="ch-dot" style="background:#34c759;"></div><div class="ch-info"><div class="n">线下零售（Best Buy 等）</div><div class="outer"><div class="inner" style="background:#34c759;" data-w="25"></div></div></div><div class="ch-pct" style="color:#34c759;">~25%</div></div>
+          <div class="ch-item"><div class="ch-dot" style="background:#af52de;"></div><div class="ch-info"><div class="n">品牌官网 DTC</div><div class="outer"><div class="inner" style="background:#af52de;" data-w="20"></div></div></div><div class="ch-pct" style="color:#af52de;">~20%</div></div>
+          <div class="ch-item"><div class="ch-dot" style="background:#ff9500;"></div><div class="ch-info"><div class="n">各国分销商 / 经销商</div><div class="outer"><div class="inner" style="background:#ff9500;" data-w="20"></div></div></div><div class="ch-pct" style="color:#ff9500;">~20%</div></div>
+          <div class="ch-item"><div class="ch-dot" style="background:#d1d1d6;"></div><div class="ch-info"><div class="n">企业直销 / B2B</div><div class="outer"><div class="inner" style="background:#d1d1d6;" data-w="5"></div></div></div><div class="ch-pct" style="color:#bababa;">~5%</div></div>
+        </div>
+        <div style="font-size:13px;color:var(--text2);line-height:2;">
+          <strong style="color:var(--text);">结构特征</strong><br>
+          · 电商平台占比最高（Amazon 为主），但过于依赖单一平台<br>
+          · 线下零售仅 25%，对比消费电子行业 50%+ 均值明显偏低<br>
+          · DTC 增长缓慢，官网体验偏功能性，缺乏内容驱动的转化路径<br>
+          · 分销体系覆盖新兴市场但价格管控弱，串货问题突出
+        </div>
+      </div>
+      <p style="font-size:10px;color:var(--text3);margin-top:16px;">* 大疆未上市，以上为基于行业访谈和竞品对比的合理估算。GoPro 线下占 76%，Insta360 DTC 约 35%。</p>
+    </div>
+
+    <!-- Section B: Three-way channel comparison -->
+    <h4 style="font-size:16px;font-weight:600;margin-bottom:16px;">三大品牌渠道战略对比</h4>
+    <div class="tbl" style="margin-bottom:32px;">
+      <table><thead><tr><th>渠道维度</th><th>DJI 大疆</th><th>Insta360</th><th>GoPro</th></tr></thead><tbody>
+        <tr><td><strong>线上电商</strong></td><td>Amazon 多站点为主，搜索排名强，但品牌旗舰店运营一般</td><td>Amazon + 官网双轮驱动，独立站 SEO 表现优异</td><td>Amazon + GoPro.com，订阅制绑定官网流量</td></tr>
+        <tr><td><strong>DTC 官网</strong></td><td>~20%，功能型官网，<span class="tag t-y">内容驱动弱</span></td><td>~35%，<span class="tag t-g">内容+社区驱动</span>，ThinkBIG 页面直接转化</td><td>~24%，订阅服务（$2660 万/季）锁定复购</td></tr>
+        <tr><td><strong>线下零售</strong></td><td>~25%，Best Buy 为标杆，<span class="tag t-y">覆盖密度低</span></td><td><span class="tag t-r">线下几乎空白</span>，主要依靠线上</td><td><span class="tag t-g">~76%</span>，全渠道深度覆盖，零售终端体系最成熟</td></tr>
+        <tr><td><strong>新兴市场</strong></td><td>依赖本地分销商，<span class="tag t-y">Shopee/Lazada 布局弱</span></td><td>KOL+独立站打法，轻资产模式渗透快</td><td>品牌知名度自带流量，但价格门槛高</td></tr>
+        <tr><td><strong>渠道冲突</strong></td><td>分销商串货、线上线下价格不一，<span class="tag t-y">管控待加强</span></td><td>以 DTC 为主，渠道冲突较小</td><td>线下经销体系成熟，价格管控规范</td></tr>
+        <tr><td><strong>售后/服务</strong></td><td>授权服务中心 + 返厂维修，<span class="tag t-y">新兴市场覆盖不足</span></td><td>以换代修 + 线上客服为主</td><td>全球售后网络成熟，线下门店即服务点</td></tr>
+      </tbody></table>
+    </div>
+
+    <!-- Section C: Regional channel map -->
+    <h4 style="font-size:16px;font-weight:600;margin-bottom:16px;">各区域渠道重心与关键合作伙伴</h4>
+    <div class="region-row">
+      <div class="region-card">
+        <div class="flag">🇺🇸</div><h3>北美</h3>
+        <p style="margin-top:8px;"><strong>核心渠道：</strong><br>Best Buy（线下旗舰）<br>Amazon（线上主力）<br>B&H Photo（专业影像）<br><br><strong>策略重点：</strong><br>Best Buy 店中店升级为品牌体验区，配备真机试飞 + 店员认证培训。Amazon A+ 内容升级，强化视频评测和对比图表。</p>
+      </div>
+      <div class="region-card">
+        <div class="flag">🇪🇺</div><h3>欧洲</h3>
+        <p style="margin-top:8px;"><strong>核心渠道：</strong><br>MediaMarkt / Saturn（德/奥）<br>Fnac / Darty（法）<br>Currys（英）<br><br><strong>策略重点：</strong><br>按国别定制合规包装（CE 标识、多语言说明书）。与 MediaMarkt 开展联合促销，利用其线下流量优势推 Pocket 3。</p>
+      </div>
+      <div class="region-card">
+        <div class="flag">🌏</div><h3>亚太新兴</h3>
+        <p style="margin-top:8px;"><strong>核心渠道：</strong><br>Shopee / Lazada（东南亚）<br>Flipkart / Amazon IN（印度）<br>本地授权经销商<br><br><strong>策略重点：</strong><br>入驻 Shopee Mall / LazMall 品牌旗舰店。推出区域专属入门 SKU。在曼谷、雅加达设立授权服务中心解决售后顾虑。</p>
+      </div>
+    </div>
+
+    <!-- Section D: DTC deep dive + Pros/Cons -->
+    <div class="two-col" style="margin-top:24px;">
+      <div>
+        <h4 style="font-size:16px;font-weight:600;margin-bottom:14px;">DTC 官网增长机会</h4>
+        <div style="background:#f5f5f7;border-radius:14px;padding:24px;font-size:13px;color:var(--text2);line-height:2;">
+          <strong style="color:var(--text);">当前问题</strong><br>
+          · 官网偏「说明书式」，缺乏内容驱动转化的能力<br>
+          · 没有像 Insta360 ThinkBIG 那样的创作者社区入口<br>
+          · SEO 以产品词为主，长尾内容（教程/场景/对比）覆盖少<br><br>
+          <strong style="color:var(--text);">改进方向</strong><br>
+          · 建立「DJI 学院」内容板块：产品教程 + 场景灵感 + 用户作品<br>
+          · 官网首页增加 UGC 作品流，打造「看到就想要」的冲动<br>
+          · 打通社交媒体 → 官网 → 购买的转化漏斗<br>
+          · 推出官网专属 SKU / 套装，制造 DTC 独有价值
+        </div>
+      </div>
+      <div>
+        <h4 style="font-size:16px;font-weight:600;margin-bottom:14px;">渠道综合诊断</h4>
+        <div style="background:#f5f5f7;border-radius:14px;padding:24px;font-size:13px;line-height:2;">
+          <strong style="color:var(--accent);">✅ 优势</strong>
+          <ul style="color:var(--text2);padding-left:16px;margin:4px 0 12px;">
+            <li>Amazon 多站点布局成熟，搜索排名和评论积累领先竞品</li>
+            <li>Best Buy 北美合作稳固，线下体验信任度高</li>
+            <li>产品线清晰，SKU 数量适中，库存管理压力可控</li>
+          </ul>
+          <strong style="color:var(--red);">⚠ 待改进</strong>
+          <ul style="color:var(--text2);padding-left:16px;margin-top:4px;">
+            <li>DTC 占比 20% vs Insta360 35%，官网内容吸引力不足</li>
+            <li>线下零售 ~25% vs GoPro 76%，体验触点严重不足</li>
+            <li>东南亚 Shopee/Lazada 品牌存在感弱，KOL 布局不如 Insta360</li>
+            <li>分销商价格管控和串货管理待系统性加强</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== PAGE: HISTORY ===== -->
+<div class="page" id="page-history">
+  <div class="detail-wrap">
+    <div class="detail-hero"><div class="dh-num">Chapter 07</div><h2>运动相机 6 年逆袭简史</h2><p class="dh-sub">2019–2025：从零到 66% 全球第一 · 产品力碾压品牌惯性</p></div>
+    <div class="da-hero">
+      <div class="timeline">
+        <div class="tl-item"><div class="year">2019</div><h4>Osmo Action 初代发布</h4><p>大疆首次进入运动相机市场，正面挑战 GoPro。双屏设计 + RockSteady 防抖引起行业关注。</p></div>
+        <div class="tl-item"><div class="year">2022</div><h4>GoPro 仍占全球份额 75%+</h4><p>GoPro 巅峰末期。大疆和 Insta360 合计不到 10%。但大疆坚持一年一代迭代。</p></div>
+        <div class="tl-item"><div class="year">2024</div><h4>Action 5 Pro 发布 · 全面对标 HERO</h4><p>防抖、夜景、续航全面升级。Pocket 3 热销，形成合力。GoPro 感到真正压力。</p></div>
+        <div class="tl-item"><div class="year">2025</div><h4>历史性时刻：66% 登顶全球第一</h4><p>GoPro 全年亏损 $9,350 万，首次年度未发新 HERO。运动相机进入「双深」时代。</p></div>
+      </div>
+      <img src="https://images.unsplash.com/photo-1492725764893-90b379c2b6e7?w=500&h=400&fit=crop&auto=format" style="width:100%;border-radius:12px;" alt="" onerror="this.style.display='none'">
+    </div>
+  </div>
+</div>
+
+<!-- ===== PAGE: CONCLUSION ===== -->
+<div class="page" id="page-conclusion">
+  <div class="detail-wrap">
+    <div class="detail-hero"><div class="dh-num">Conclusion</div><h2>总结与展望</h2><p class="dh-sub">七章分析的核心结论 + 关于这份报告</p></div>
+
+    <!-- Key takeaways -->
+    <h4 style="font-size:16px;font-weight:600;margin-bottom:20px;">七大核心结论</h4>
+    <div class="opp-list">
+      <div class="opp-item"><div class="opp-num" style="font-size:32px;min-width:32px;color:var(--accent);">01</div><div class="opp-content"><h3>无人机帝国的护城河极深，短期无人能撼</h3><p>83.5% 的侦测份额、800 亿+营收、连续 12 年盈利——在消费级无人机领域，DJI 的竞争对手加起来不到 17%。真正需要关注的是地缘政治风险（美国关税、实体清单），而非商业竞争。</p></div></div>
+      <div class="opp-item"><div class="opp-num" style="font-size:32px;min-width:32px;color:var(--accent);">02</div><div class="opp-content"><h3>运动相机是新战场，也是最大的增长变量</h3><p>DJI 仅用 6 年就从零到 66% 收入份额登顶。但 Insta360 凭借内容生态 + DTC + 创作者社区正在快速追赶，增速 76.85%。这个战场，硬件赢了还不够，内容生态的仗才刚开始。</p></div></div>
+      <div class="opp-item"><div class="opp-num" style="font-size:32px;min-width:32px;color:var(--accent);">03</div><div class="opp-content"><h3>海外区域三极分化，不能一套打法打天下</h3><p>北美靠零售体验和品牌信任（Best Buy + 线下体验），欧洲靠合规深耕和户外文化，亚太靠电商渠道下沉和本地化服务。三块战区需要三套不同的资源分配和 KPI 体系。</p></div></div>
+      <div class="opp-item"><div class="opp-num" style="font-size:32px;min-width:32px;color:var(--accent);">04</div><div class="opp-content"><h3>硬件之外，内容生态和社区建设是下一个增长飞轮</h3><p>四类海外消费者的核心痛点都指向同一个方向：买了设备之后，如何更好地使用和创作？围绕产品搭建更活跃的用户社区、更智能的创作工具、更低的使用门槛，能够让用户在购买之后持续获得价值感，进而带动口碑传播和复购。</p></div></div>
+      <div class="opp-item"><div class="opp-num" style="font-size:32px;min-width:32px;color:var(--accent);">05</div><div class="opp-content"><h3>Pocket 3 可能是下一个「无人机级」的增长引擎</h3><p>手持云台相机是一个被低估的市场。Pocket 3 的成功不是偶然——它满足了一个巨大的未被满足需求：用手机拍不出、用相机太麻烦的中间地带。围绕 Pocket 做 Creator Kit、做内容营销、做 DTC，有机会复制运动相机的逆袭路径。</p></div></div>
+      <div class="opp-item"><div class="opp-num" style="font-size:32px;min-width:32px;color:var(--accent);">06</div><div class="opp-content"><h3>渠道结构优化是海外增长的重要杠杆</h3><p>当前 DTC 占比约 20%、线下零售约 25%，与同业对比有较大的提升空间。优化官网购物体验、拓宽线下零售触点、加强东南亚电商布局，都可以有效拉动销售转化和品牌认知。渠道端的每一点改进，都会直接体现在收入和利润上。</p></div></div>
+      <div class="opp-item"><div class="opp-num" style="font-size:32px;min-width:32px;color:var(--accent);">07</div><div class="opp-content"><h3>6 年从零到第一的故事，值得被更多海外用户听到</h3><p>大疆在运动相机领域的崛起本身就是品牌叙事的绝佳素材。在创作者经济时代，用户不仅是消费者，也是品牌故事的传播者。让更多用户了解大疆产品的背后故事、参与到创作社区中，本身就是一种高效的品牌增长方式。</p></div></div>
+    </div>
+
+    <!-- About this report -->
+    <div style="margin-top:56px;background:#f5f5f7;border-radius:20px;padding:48px 44px;">
+      <h4 style="font-size:16px;font-weight:600;margin-bottom:16px;">关于这份报告</h4>
+      <p style="font-size:15px;color:var(--text2);line-height:2;">
+        这份报告是我为大疆销售培训生（海外业务）岗位准备的求职作品。作为一个摄影爱好者和 DJI Pocket 3 的真实用户，我对大疆的产品有第一手体验；作为一个有海外销售实战经验（美国、印尼、日本、韩国等市场）的候选人，我对「怎么把中国好产品卖给海外消费者」有切身的理解和热情。
+      </p>
+      <p style="font-size:15px;color:var(--text2);line-height:2;margin-top:16px;">
+        报告中的所有数据均来自 Dedrone、Frost & Sullivan、GoPro 年报、大公文汇、虎嗅、36氪等公开渠道，部分为基于行业访谈的合理估算。做这份报告的初衷很简单——我想加入大疆做海外销售，而这是我能想到的最好的方式来表达我对这个行业的理解和热情。
+      </p>
+      <p style="font-size:15px;color:var(--text2);line-height:2;margin-top:16px;">
+        如果有机会面试，我很愿意深入讨论报告中的任何一个观点。
+      </p>
+      <p style="font-size:13px;color:var(--text3);margin-top:24px;">
+        — 李娉娉 · 2026.08 · <a href="mailto:987849774@qq.com" style="color:var(--accent);">987849774@qq.com</a>
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- ===== FOOTER ===== -->
+<footer class="ft">
+  <p>数据来源：Dedrone 2025 · Frost & Sullivan · GoPro Annual Report 2025 · 大公文汇 / 虎嗅 / 36氪 · DroneAnalyst</p>
+  <p style="margin-top:4px;">© 2026 李娉娉 · 本作品为大疆求职用途，非商业发布 · <a href="mailto:987849774@qq.com">联系作者</a> · <a href="resume_optimized_大疆销售培训生_v3.docx">下载简历</a></p>
+</footer>
+
+<script>
+  // Preview data
+  const previews = JSON.parse(document.getElementById('previewData').textContent);
+
+  function buildCard(ch) {
+    const d = previews[ch];
+    const stats = d.stats.map(s => `<div class="ch-stat"><div class="val">${s[0]}</div><div class="lbl">${s[1]}</div></div>`).join('');
+    return `<div class="home-card">
+      <img class="ch-img" src="${d.img}" alt="" onerror="this.style.display='none'">
+      <div class="ch-num">Chapter ${ch === 'market' ? '01' : ch === 'compete' ? '02' : ch === 'regions' ? '03' : ch === 'consumers' ? '04' : ch === 'strategy' ? '05' : ch === 'channel' ? '06' : ch === 'history' ? '07' : '08'}</div>
+      <h2>${d.title}</h2>
+      <p class="ch-desc">${d.desc}</p>
+      <div class="ch-stats">${stats}</div>
+      <a href="javascript:openPage('${ch}')" class="ch-btn">进入章节 →</a>
+    </div>`;
+  }
+
+  function preview(ch) {
+    document.getElementById('previewPanel').innerHTML = buildCard(ch);
+    document.querySelectorAll('#sidebarNav a').forEach(a => a.classList.remove('active'));
+    document.querySelector(`#sidebarNav a[data-ch="${ch}"]`).classList.add('active');
+  }
+
+  function openPage(name) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById('page-' + name).classList.add('active');
+    document.getElementById('backBtn').style.opacity = '1';
+    document.getElementById('backBtn').style.pointerEvents = 'auto';
+    window.scrollTo(0,0);
+    setTimeout(() => {
+      document.querySelectorAll('#page-' + name + ' .fill[data-w]').forEach(b => b.style.width = b.getAttribute('data-w') + '%');
+      document.querySelectorAll('#page-' + name + ' .inner[data-w]').forEach(b => b.style.width = b.getAttribute('data-w') + '%');
+    }, 200);
+  }
+
+  function goHome() {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById('page-home').classList.add('active');
+    document.getElementById('backBtn').style.opacity = '0';
+    document.getElementById('backBtn').style.pointerEvents = 'none';
+    document.getElementById('previewPanel').innerHTML = document.getElementById('previewDefault').outerHTML;
+    document.querySelectorAll('#sidebarNav a').forEach(a => a.classList.remove('active'));
+  }
+
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') goHome(); });
+  document.querySelectorAll('img').forEach(img => { img.addEventListener('error', () => { img.style.display = 'none'; }); });
+</script>
+</body>
+</html>
